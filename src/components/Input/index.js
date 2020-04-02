@@ -1,15 +1,44 @@
-import React, { forwardRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { TextInput } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useField } from '@unform/core';
 
-import { Container, TInput } from './styles';
+import { Container } from './styles';
 
-function Input({ style, icon, ...rest }, ref) {
+function Input({ name, ...rest }) {
+  const inputRef = useRef(null);
+  const { fieldName, registerField, defaultValue = '', error } = useField(name);
+
+  useEffect(() => {
+    console.tron.log('name', name);
+
+    registerField({
+      name: 'id',
+      ref: inputRef.current,
+      path: '_lastNativeText',
+      getValue(ref) {
+        return ref._lastNativeText || '';
+      },
+      setValue(ref, value) {
+        ref.setNativeProps({ text: value });
+        ref._lastNativeText = value;
+      },
+
+      clearValue(ref) {
+        ref.setNativeProps({ text: '' });
+        ref._lastNativeText = '';
+      },
+    });
+  }, [fieldName, registerField]);
+
   return (
-    <Container style={style}>
-      {icon && <Icon name={icon} size={20} color="rgba(255, 255, 255, 0.6)" />}
-      <TInput {...rest} ref={ref} />
-    </Container>
+    <TextInput ref={inputRef} defaultValue={defaultValue} {...rest} />
+    // <Container
+    //   ref={inputRef}
+    //   defaultValue={defaultValue}
+    //   error={error}
+    //   {...rest}
+    // />
   );
 }
 
@@ -23,4 +52,4 @@ function Input({ style, icon, ...rest }, ref) {
 //     style: {},
 // };
 
-export default forwardRef(Input);
+export default Input;

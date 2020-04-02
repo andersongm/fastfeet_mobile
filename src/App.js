@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import createRouter from './routes';
+import Routes from './routes';
 import SignIn from './pages/SignIn';
 import Deliveries from './pages/Deliveries';
 import Profile from './pages/Profile';
@@ -10,12 +10,15 @@ import Dashboard from './pages/Dashboard';
 import DeliveryDetail from './pages/DeliveryDetail';
 
 export default function App() {
-  // const signed = false;
-  // const Routes = createRouter(signed);
-
-  // return <Routes />;
-
-  const Stack = createStackNavigator();
+  const signed = false;
+  console.tron.log('opa');
+  // return createRouter(false);
+  return (
+    <NavigationContainer>
+      <Routes />;
+    </NavigationContainer>
+  );
+  /* const Stack = createStackNavigator();
 
   return (
     <NavigationContainer>
@@ -30,7 +33,6 @@ export default function App() {
           component={SignIn}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen name="Deliveries" component={Deliveries} /> */}
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
@@ -71,5 +73,5 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  ); */
 }

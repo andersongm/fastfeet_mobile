@@ -41,6 +41,7 @@ module.exports = {
     'react/sort-comp': 'off',
     'no-unused-vars': 'off',
     'no-param-reassign': 'off',
+    "no-underscore-dangle": "off",
     // 'react-hooks/rules-of-hooks': 'error',
     // 'react-hooks/exhaustive-deps': 'warn',
     'no-undef': 'off',
