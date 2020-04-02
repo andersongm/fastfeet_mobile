@@ -1,5 +1,7 @@
 import React from 'react';
 import { StatusBar, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -8,10 +10,15 @@ import {
   DeliverymanInfo,
   Label,
   Info,
-  Text,
 } from './styles';
 
 export default function Profile({ navigation }) {
+  const deliveryMan = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  function handleLogout() {
+    dispatch(signOut());
+  }
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -23,14 +30,14 @@ export default function Profile({ navigation }) {
         />
         <DeliverymanInfo>
           <Label>Nome Completo</Label>
-          <Info>Gaspar Antunes</Info>
+          <Info>{deliveryMan.profile.name}</Info>
           <Label>Email</Label>
-          <Info>email@gmail.com</Info>
+          <Info>{deliveryMan.profile.email}</Info>
           <Label>Data de Cadastro</Label>
           <Info>10/01/2020</Info>
         </DeliverymanInfo>
 
-        <SubmitButton onPress={() => navigation.goBack()}>Logout</SubmitButton>
+        <SubmitButton onPress={handleLogout}>Logout</SubmitButton>
       </Container>
     </>
   );

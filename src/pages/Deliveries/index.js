@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Card from './Card';
 import dels from './deliveries.json';
@@ -22,14 +23,11 @@ import {
 
 export default function Deliveries({ navigation }) {
   const [deliveries, setDeliveries] = useState(dels);
+  const deliveryMan = useSelector((state) => state.user);
   let pendings = [];
   let delivered = [];
 
-  // const deliveries = dels;
-
-  // const deliveries = function handleLogout() {
-  //   navigation.navigate('Profile');
-  // };
+  // Alert.alert(deliveryMan);
 
   function handleGetPendings() {
     setDeliveries(dels);
@@ -56,7 +54,7 @@ export default function Deliveries({ navigation }) {
           />
           <DeliveryManInfo>
             <Label>Bem vindo de volta,</Label>
-            <Name>Romario Silva</Name>
+            <Name>{deliveryMan.profile.name}</Name>
           </DeliveryManInfo>
           <TouchableOpacity>
             <Icon name="exit-to-app" size={30} color="#e95151" />

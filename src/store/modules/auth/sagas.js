@@ -11,7 +11,7 @@ export function* signIn({ payload }) {
     const { data } = yield call(api.post, 'deliverymans/sessions', {
       id,
     });
-    console.tron.log(data);
+
     yield put(signInSuccess(data));
   } catch (error) {
     Alert.alert(
