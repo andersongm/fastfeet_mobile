@@ -1,0 +1,107 @@
+[
+{
+      "status": "CANCELADA",
+      "id": 4,
+      "recipient_id": 2,
+      "deliveryman_id": 1,
+      "signature_id": null,
+      "product": "Produto 2",
+      "canceled_at": "2020-02-26T19:21:55.293Z",
+      "start_date": "2020-02-24T15:56:00.000Z",
+      "end_date": null,
+      "createdAt": "2020-02-24T22:21:28.430Z",
+      "updatedAt": "2020-02-26T19:21:55.295Z",
+      "deliveryman": {
+        "name": "Juca Silva",
+        "avatar_id": 21,
+        "avatar": {
+          "url": "http://localhost:4000/avatarfiles/b775f26a40acb4ab63ce1cd1ce85dee0.jpg",
+          "type": "avatar",
+          "path": "b775f26a40acb4ab63ce1cd1ce85dee0.jpg"
+        }
+      },
+      "recipient": {
+        "address": "Rua 2, 222, Rio de Janeiro - RJ",
+        "id": 2,
+        "name": "Bebeto Gomes",
+        "street": "Rua 2",
+        "number": 222,
+        "complement": null,
+        "state": "RJ",
+        "city": "Rio de Janeiro",
+        "zip_code": "35000-987",
+        "createdAt": "2020-02-17T19:03:25.846Z",
+        "updatedAt": "2020-02-17T19:03:25.846Z"
+      }
+    },
+    {
+      "status": "CANCELADA",
+      "id": 5,
+      "recipient_id": 1,
+      "deliveryman_id": 1,
+      "signature_id": null,
+      "product": "Produto 444",
+      "canceled_at": "2020-02-26T23:37:48.240Z",
+      "start_date": null,
+      "end_date": null,
+      "createdAt": "2020-02-24T23:01:11.906Z",
+      "updatedAt": "2020-02-27T01:14:57.479Z",
+      "deliveryman": {
+        "name": "Juca Silva",
+        "avatar_id": 21,
+        "avatar": {
+          "url": "http://localhost:4000/avatarfiles/b775f26a40acb4ab63ce1cd1ce85dee0.jpg",
+          "type": "avatar",
+          "path": "b775f26a40acb4ab63ce1cd1ce85dee0.jpg"
+        }
+      },
+      "recipient": {
+        "address": "Rua 1, 111, Rio de Janeiro - RJ",
+        "id": 1,
+        "name": "Romario Silva Sauro",
+        "street": "Rua 1",
+        "number": 111,
+        "complement": "",
+        "state": "RJ",
+        "city": "Rio de Janeiro",
+        "zip_code": "35000-987",
+        "createdAt": "2020-02-17T19:02:22.508Z",
+        "updatedAt": "2020-03-18T00:58:50.305Z"
+      }
+    },
+    {
+      "status": "RETIRADA",
+      "id": 6,
+      "recipient_id": 1,
+      "deliveryman_id": 1,
+      "signature_id": null,
+      "product": "Teste",
+      "canceled_at": null,
+      "start_date": "2020-02-26T15:56:00.000Z",
+      "end_date": null,
+      "createdAt": "2020-02-26T13:56:01.714Z",
+      "updatedAt": "2020-02-26T13:57:00.908Z",
+      "deliveryman": {
+        "name": "Juca Silva",
+        "avatar_id": 21,
+        "avatar": {
+          "url": "http://localhost:4000/avatarfiles/b775f26a40acb4ab63ce1cd1ce85dee0.jpg",
+          "type": "avatar",
+          "path": "b775f26a40acb4ab63ce1cd1ce85dee0.jpg"
+        }
+      },
+      "recipient": {
+        "address": "Rua 1, 111, Rio de Janeiro - RJ",
+        "id": 1,
+        "name": "Romario Silva Sauro",
+        "street": "Rua 1",
+        "number": 111,
+        "complement": "",
+        "state": "RJ",
+        "city": "Rio de Janeiro",
+        "zip_code": "35000-987",
+        "createdAt": "2020-02-17T19:02:22.508Z",
+        "updatedAt": "2020-03-18T00:58:50.305Z"
+      }
+    }
+  ]
