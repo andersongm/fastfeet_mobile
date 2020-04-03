@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Text, TouchableOpacity, StatusBar } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import api from '../../services/api';
 import Card from './Card';
-import dels from './deliveries.json';
+import { signOut } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -22,24 +23,38 @@ import {
 } from './styles';
 
 export default function Deliveries({ navigation }) {
-  const [deliveries, setDeliveries] = useState(dels);
+  const [deliveries, setDeliveries] = useState([]);
+  const [current, setCurrent] = useState(true);
   const deliveryMan = useSelector((state) => state.user);
-  let pendings = [];
-  let delivered = [];
+  const dispatch = useDispatch();
 
-  // Alert.alert(deliveryMan);
+  async function loadDeliveries(id, statusDelivery = 'PENDENTE') {
+    const response = await api.get(`deliverymans/${id}/deliveries`);
+
+    const filtereds = response.data.filter(
+      (delivery) => delivery.status === statusDelivery
+    );
+
+    setDeliveries(filtereds);
+  }
+
+  useEffect(() => {
+    loadDeliveries(deliveryMan.profile.id);
+    setCurrent(current);
+  }, []);
+
+  function handleLogout() {
+    dispatch(signOut());
+  }
 
   function handleGetPendings() {
-    setDeliveries(dels);
-
-    pendings = deliveries.filter((delivery) => delivery.status === 'PENDENTE');
-    setDeliveries(pendings);
+    loadDeliveries(deliveryMan.profile.id, 'PENDENTE');
+    setCurrent(!current);
   }
 
   function handleGetDelivered() {
-    setDeliveries(dels);
-    delivered = deliveries.filter((delivery) => delivery.status === 'ENTREGUE');
-    setDeliveries(delivered);
+    loadDeliveries(deliveryMan.profile.id, 'ENTREGUE');
+    setCurrent(!current);
   }
 
   return (
@@ -49,14 +64,16 @@ export default function Deliveries({ navigation }) {
         <HeaderPage>
           <Avatar
             source={{
-              uri: 'https://api.adorable.io/avatars/285/abott@adorable.png',
+              uri:
+                deliveryMan.profile.url ||
+                'https://api.adorable.io/avatars/285/abott@adorable.png',
             }}
           />
           <DeliveryManInfo>
             <Label>Bem vindo de volta,</Label>
             <Name>{deliveryMan.profile.name}</Name>
           </DeliveryManInfo>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout}>
             <Icon name="exit-to-app" size={30} color="#e95151" />
           </TouchableOpacity>
         </HeaderPage>
@@ -64,10 +81,10 @@ export default function Deliveries({ navigation }) {
           <Name>Entregas</Name>
           <ListStatus>
             <ButtonStatus onPress={() => handleGetPendings()}>
-              <TextButtonStatus>Pendentes</TextButtonStatus>
+              <TextButtonStatus status={current}>Pendentes</TextButtonStatus>
             </ButtonStatus>
             <ButtonStatus onPress={() => handleGetDelivered()}>
-              <TextButtonStatus>Entregues</TextButtonStatus>
+              <TextButtonStatus status={!current}>Entregues</TextButtonStatus>
             </ButtonStatus>
           </ListStatus>
         </TitleList>

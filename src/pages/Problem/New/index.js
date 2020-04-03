@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-// import FormInput from '../../components/Input';
-// import FormInput from '../../components/Input';
+import { Alert } from 'react-native';
+import api from '../../../services/api';
 
 import {
   Container,
@@ -11,22 +11,49 @@ import {
   ButtonContainer,
 } from './styles';
 
-export default function NewProblem() {
+export default function NewProblem({ navigation, route }) {
+  const { id } = route.params;
   const [problem, setProblem] = useState('');
 
-  function handleSubmit(data) {}
+  async function handleSubmit() {
+    try {
+      const response = api.post(`/delivery/${id}/problems`, {
+        description: problem,
+      });
+
+      if (!response) {
+        Alert.alert('Falha ao registrar problema para essa encomenda!!!');
+        return;
+      }
+
+      Alert.alert(
+        'FastFeet',
+        'Problema Registrado com Sucesso!!!',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.goBack(),
+          },
+        ],
+        { cancelable: false }
+      );
+    } catch (error) {
+      Alert.alert('Falha Geral ao registrar problema para essa encomenda!!!');
+    }
+  }
 
   return (
     <Container>
       <Form>
         <FormInput
+          name="problem"
           multiline={true}
+          keyboarType="default"
           autoCorrect={false}
           autoCapitalize="none"
           placeholder="Inclua aqui o problema que ocorreu na entrega "
           returnKeyType="next"
-          value={problem}
-          onChangeText={setProblem}
+          onChangeText={(text) => setProblem(text)}
         />
         <ButtonContainer>
           <SubmitButton onPress={handleSubmit}>

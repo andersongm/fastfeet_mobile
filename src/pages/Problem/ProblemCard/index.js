@@ -1,13 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
+import { parseISO, format } from 'date-fns';
 
 import { Container, DescProblem, DateProblem } from './styles';
 
-export default function ProblemCard() {
+export default function ProblemCard({ data }) {
+  const dateFormatted = format(parseISO(data.createdAt), 'dd/MM/yyyy');
+
   return (
     <Container>
-      <DescProblem>Destinatário Ausente</DescProblem>
-      <DateProblem>14/01/2020</DateProblem>
+      <DescProblem>{data.description}</DescProblem>
+      <DateProblem>{dateFormatted}</DateProblem>
     </Container>
   );
 }

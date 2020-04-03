@@ -13,10 +13,10 @@ export const Container = styled.View`
 
 export const DescProblem = styled.Text`
   color: #888;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 export const DateProblem = styled.Text`
   color: #888;
-  font-size: 16px;
+  font-size: 14px;
 `;

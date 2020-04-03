@@ -31,10 +31,12 @@ export const IdDeliveryMan = styled.TextInput.attrs({
 })`
   margin-bottom: 10px;
   font-size: 16px;
+  font-weight: bold;
   background: #fff;
   width: 100px;
   height: 46px;
   border-radius: 5px;
   padding: 0 10px;
   width: 100%;
+  text-align: center;
 `;

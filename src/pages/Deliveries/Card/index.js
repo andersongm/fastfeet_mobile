@@ -31,7 +31,7 @@ export default function Card({ data, navigation }) {
       <HeaderCard>
         <Icon name="local-shipping" size={30} color="#7d40e7" />
         <Product>
-          {data.product} - {data.status}{' '}
+          {data.product} - {data.status} - {data.id}
         </Product>
       </HeaderCard>
       <Timeline status={data.status} />

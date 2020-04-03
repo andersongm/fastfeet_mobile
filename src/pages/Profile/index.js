@@ -1,6 +1,7 @@
 import React from 'react';
-import { StatusBar, Alert } from 'react-native';
+import { StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { parseISO, format } from 'date-fns';
 import { signOut } from '~/store/modules/auth/actions';
 
 import {
@@ -19,13 +20,19 @@ export default function Profile({ navigation }) {
     dispatch(signOut());
   }
 
+  const dateFormatted =
+    format(parseISO(deliveryMan.profile.createdAt), 'dd/MM/yyyy') || '';
+  console.log('DeliveryMan:', deliveryMan);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <Container>
         <Avatar
           source={{
-            uri: 'https://api.adorable.io/avatars/285/abott@adorable.png',
+            uri:
+              deliveryMan.profile.url ||
+              'https://api.adorable.io/avatars/285/abott@adorable.png',
           }}
         />
         <DeliverymanInfo>
@@ -34,7 +41,7 @@ export default function Profile({ navigation }) {
           <Label>Email</Label>
           <Info>{deliveryMan.profile.email}</Info>
           <Label>Data de Cadastro</Label>
-          <Info>10/01/2020</Info>
+          <Info>{dateFormatted}</Info>
         </DeliverymanInfo>
 
         <SubmitButton onPress={handleLogout}>Logout</SubmitButton>

@@ -82,7 +82,8 @@ export const ButtonStatus = styled(RectButton)`
 `;
 
 export const TextButtonStatus = styled.Text`
-  color: #7d40e7;
+  /* color: #7d40e7; */
+  color: ${(props) => (props.status ? '#e95151' : '#7d40e7')};
   font-weight: bold;
   font-size: 12px;
 `;

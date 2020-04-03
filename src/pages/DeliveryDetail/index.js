@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { parseISO, format } from 'date-fns';
 import OperationButton from '../../components/OperationButton';
@@ -28,11 +28,18 @@ export default function DeliveryDetail({ navigation, route }) {
     : '--/--/--';
 
   function handleNewProblem() {
-    navigation.navigate('NewProblem');
+    if (delivery.status === 'ENTREGUE') {
+      Alert.alert('Encomenda já foi entregue!');
+      return;
+    }
+
+    navigation.navigate('NewProblem', { id: delivery.id });
   }
 
   function handleViewProblem() {
-    navigation.navigate('ViewProblem');
+    navigation.navigate('ViewProblem', { id: delivery.id });
+
+    // navigation.navigate('ViewProblem');
   }
 
   function handleConfirmDelivery() {
@@ -89,6 +96,7 @@ export default function DeliveryDetail({ navigation, route }) {
           <OperationButton
             icon="highlight-off"
             colorIcon="#f00"
+            navigation={navigation}
             onPress={handleNewProblem}
           >
             Informar Problema
@@ -96,6 +104,7 @@ export default function DeliveryDetail({ navigation, route }) {
           <OperationButton
             icon="info-outline"
             colorIcon="#e7ba40"
+            navigation={navigation}
             onPress={handleViewProblem}
           >
             Visualizar Problemas

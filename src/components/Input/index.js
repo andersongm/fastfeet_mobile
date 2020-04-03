@@ -13,7 +13,7 @@ function Input({ name, ...rest }) {
     console.tron.log('name', name);
 
     registerField({
-      name: 'id',
+      name: fieldName,
       ref: inputRef.current,
       path: '_lastNativeText',
       getValue(ref) {
