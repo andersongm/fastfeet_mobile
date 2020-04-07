@@ -8,12 +8,15 @@ import { signInSuccess, signFailure } from './actions';
 export function* signIn({ payload }) {
   try {
     const { id } = payload;
-    const { data } = yield call(api.post, 'deliverymans/sessions', {
+    console.log('id:', id);
+    const { data } = yield call(api.post, '/deliverymans/sessions', {
       id,
     });
 
     yield put(signInSuccess(data));
   } catch (error) {
+    console.log(error);
+
     Alert.alert(
       'Falha na autenticação',
       'Erro ao efetuar Login, verifique seu ID de Acesso'

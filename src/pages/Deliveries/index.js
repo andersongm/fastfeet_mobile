@@ -17,7 +17,6 @@ import {
   TitleList,
   Name,
   ListStatus,
-  Status,
   TextButtonStatus,
   ButtonStatus,
 } from './styles';
@@ -26,14 +25,26 @@ export default function Deliveries({ navigation }) {
   const [deliveries, setDeliveries] = useState([]);
   const [current, setCurrent] = useState(true);
   const deliveryMan = useSelector((state) => state.user);
+  // const status = useSelector((state) => state.deliveries.delivery_status);
   const dispatch = useDispatch();
 
-  async function loadDeliveries(id, statusDelivery = 'PENDENTE') {
+  async function loadDeliveries(id, statusDelivery) {
     const response = await api.get(`deliverymans/${id}/deliveries`);
 
-    const filtereds = response.data.filter(
-      (delivery) => delivery.status === statusDelivery
-    );
+    console.log(response.data);
+
+    let filtereds = null;
+
+    if (statusDelivery) {
+      filtereds = response.data.filter(
+        (delivery) => delivery.status === statusDelivery
+      );
+    } else {
+      filtereds = response.data.filter(
+        (delivery) =>
+          delivery.status === 'RETIRADA' || delivery.status === 'PENDENTE'
+      );
+    }
 
     setDeliveries(filtereds);
   }
@@ -43,12 +54,19 @@ export default function Deliveries({ navigation }) {
     setCurrent(current);
   }, []);
 
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      loadDeliveries(deliveryMan.profile.id);
+      setCurrent(current);
+    });
+  }, []);
+
   function handleLogout() {
     dispatch(signOut());
   }
 
   function handleGetPendings() {
-    loadDeliveries(deliveryMan.profile.id, 'PENDENTE');
+    loadDeliveries(deliveryMan.profile.id);
     setCurrent(!current);
   }
 
@@ -65,13 +83,13 @@ export default function Deliveries({ navigation }) {
           <Avatar
             source={{
               uri:
-                deliveryMan.profile.url ||
+                deliveryMan.profile?.url ||
                 'https://api.adorable.io/avatars/285/abott@adorable.png',
             }}
           />
           <DeliveryManInfo>
             <Label>Bem vindo de volta,</Label>
-            <Name>{deliveryMan.profile.name}</Name>
+            <Name>{deliveryMan.profile?.name}</Name>
           </DeliveryManInfo>
           <TouchableOpacity onPress={handleLogout}>
             <Icon name="exit-to-app" size={30} color="#e95151" />
@@ -92,11 +110,7 @@ export default function Deliveries({ navigation }) {
           data={deliveries}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <Card
-              onCancel={() => handleCancel(item.id)}
-              data={item}
-              navigation={navigation}
-            />
+            <Card data={item} navigation={navigation} />
           )}
         />
       </Container>

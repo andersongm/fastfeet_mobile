@@ -15,7 +15,7 @@ import {
 } from './styles';
 
 export default function ViewProblem({ navigation, route }) {
-  const { id } = route.params;
+  const { id, product } = route.params;
   const [problems, setProblems] = useState([]);
 
   // '/delivery/:id/problems
@@ -30,7 +30,7 @@ export default function ViewProblem({ navigation, route }) {
 
   return (
     <Container>
-      <TitleDelivery>Encomenda 01</TitleDelivery>
+      <TitleDelivery>{product}</TitleDelivery>
       <Problem>
         <ProblemList
           data={problems}

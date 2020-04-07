@@ -16,13 +16,16 @@ import {
 export default function Profile({ navigation }) {
   const deliveryMan = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  let dateFormatted = '';
   function handleLogout() {
     dispatch(signOut());
   }
+  console.log(deliveryMan);
 
-  const dateFormatted =
-    format(parseISO(deliveryMan.profile.createdAt), 'dd/MM/yyyy') || '';
-  console.log('DeliveryMan:', deliveryMan);
+  if (deliveryMan.profile) {
+    dateFormatted =
+      format(parseISO(deliveryMan.profile?.createdAt), 'dd/MM/yyyy') || '';
+  }
 
   return (
     <>
@@ -31,15 +34,15 @@ export default function Profile({ navigation }) {
         <Avatar
           source={{
             uri:
-              deliveryMan.profile.url ||
+              deliveryMan.profile?.url ||
               'https://api.adorable.io/avatars/285/abott@adorable.png',
           }}
         />
         <DeliverymanInfo>
           <Label>Nome Completo</Label>
-          <Info>{deliveryMan.profile.name}</Info>
+          <Info>{deliveryMan.profile?.name}</Info>
           <Label>Email</Label>
-          <Info>{deliveryMan.profile.email}</Info>
+          <Info>{deliveryMan.profile?.email}</Info>
           <Label>Data de Cadastro</Label>
           <Info>{dateFormatted}</Info>
         </DeliverymanInfo>

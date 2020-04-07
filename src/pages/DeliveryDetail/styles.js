@@ -24,7 +24,7 @@ export const DeliveryStatus = styled.View`
   width: 350px;
   box-shadow: 1px 1px 2px #ddd;
   border-radius: 4px;
-  padding: 20px;
+  padding: 15px 20px;
 `;
 
 export const DeliveryButtons = styled.View`
@@ -60,4 +60,10 @@ export const LabelHeader = styled.Text`
 export const InfoDate = styled.View`
   flex-direction: row;
   justify-content: space-between;
+`;
+
+export const ContainerWithDraw = styled.View`
+  flex: 1;
+  align-items: flex-end;
+  display: ${(props) => (props.status ? 'flex' : 'none')};
 `;

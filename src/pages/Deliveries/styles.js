@@ -13,8 +13,8 @@ import Button from '../../components/Button';
 // `;
 
 export const Container = styled.SafeAreaView`
-  /* flex: 1;
-  background: #fff; */
+  flex: 1;
+  /* background: #fff; */
   background: #fff;
 `;
 
@@ -52,9 +52,10 @@ export const Avatar = styled.Image`
 export const DeliveryList = styled.FlatList.attrs({
   showsVerticalScroolIndicator: false,
   contentContainerStyle: { padding: 30 },
+  // contentInsetAdjustmentBehavior: 'automatic',
 })`
-  /* height: 450px; */
-  align-self: auto;
+  /* align-self: auto; */
+  margin-bottom: 30px;
 `;
 
 export const TitleList = styled.View`
