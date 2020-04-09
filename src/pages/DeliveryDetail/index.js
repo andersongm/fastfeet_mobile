@@ -27,22 +27,29 @@ import {
 export default function DeliveryDetail({ navigation, route }) {
   let messageError = '';
 
-  const dispatch = useDispatch();
-  const status = useSelector((state) => state.deliveries.delivery_status);
-
-  console.log('DeliveryDetail  - Status Reducer:', status);
+  // const dispatch = useDispatch();
+  // const status = useSelector((state) => state.deliveries.delivery_status);
 
   const [statusAux, setStatusAux] = useState('');
   const [startDateAux, setStartDateAux] = useState('');
 
-  const delivery = route.params.item;
-  const { id } = route.params.item;
+  // const delivery = route.params.item;
+  const [delivery, setDelivery] = useState([]);
+  const { id, deliveryman_id } = route.params.item;
 
-  // async function loadDelivery() {
-  //   const response = await api.get(`/deliveries/${idDelivery}`);
-  //   console.log(response.data);
-  //   setDelivery(response.data);
-  // }
+  async function loadDelivery(idDelivery) {
+    console.log('deliveryman_id:', deliveryman_id, idDelivery);
+    const response = await api.get(
+      `/deliverymans/${deliveryman_id}/deliveries/`,
+      {
+        params: {
+          id_delivery: idDelivery,
+        },
+      }
+    );
+    console.log('DeliveryDetail:', response.data.rows);
+    setDelivery(response.data.rows[0]);
+  }
 
   // const delivery = route.params.item;
 
@@ -78,6 +85,17 @@ export default function DeliveryDetail({ navigation, route }) {
     navigation.navigate('NewProblem', { id: delivery.id });
   }
 
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      loadDelivery(id);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   console.log('chamando loadDelivery:...', id);
+  //   loadDelivery(id);
+  // }, []);
+
   function handleViewProblem() {
     navigation.navigate('ViewProblem', {
       id: delivery.id,
@@ -86,7 +104,7 @@ export default function DeliveryDetail({ navigation, route }) {
   }
 
   function handleConfirmDelivery() {
-    if (delivery.status === 'PENDENTE' && statusAux !== 'RETIRADA') {
+    if (delivery.status === 'PENDENTE') {
       messageError =
         'Encomenda deve ser retirada primeiro para confirmar entrega!';
     } else if (delivery.status === 'ENTREGUE') {
@@ -117,12 +135,6 @@ export default function DeliveryDetail({ navigation, route }) {
 
   async function handleWithDraw(idDelivery) {
     console.log(idDelivery, delivery.deliveryman_id);
-    // dispatch(withDraw(id, delivery.deliveryman_id));
-
-    // setStatusAux('RETIRADA');
-    // setStartDateAux(format(new Date().getTime(), 'dd/MM/yyyy'));
-
-    // console.log(response);
 
     try {
       const response = await api.put(`/deliveries/${idDelivery}/start`, {
@@ -140,7 +152,7 @@ export default function DeliveryDetail({ navigation, route }) {
         [
           {
             text: 'OK',
-            onPress: () => setInfoAux(),
+            onPress: () => loadDelivery(id), // setInfoAux(),
           },
         ],
         { cancelable: false }
@@ -178,13 +190,14 @@ export default function DeliveryDetail({ navigation, route }) {
           <Header>
             <Icon name="event" size={30} color="#7d40e7" />
             <LabelHeader>Situação da Entrega</LabelHeader>
-            <ContainerWithDraw
+            {/* <ContainerWithDraw
               status={
                 statusAux === 'RETIRADA'
                   ? false
                   : delivery.status === 'PENDENTE'
               }
-            >
+            > */}
+            <ContainerWithDraw status={delivery.status === 'PENDENTE'}>
               <WithDrawButton
                 icon="thumb-up"
                 colorIcon="#008000"
@@ -199,13 +212,13 @@ export default function DeliveryDetail({ navigation, route }) {
             <Info>
               <Label>STATUS</Label>
               {/* <Text>{statusAux || delivery.status}</Text> */}
-              <Text>{statusAux || delivery.status}</Text>
+              <Text>{delivery.status}</Text>
             </Info>
             <InfoDate>
               <Info>
                 <Label>DATA DE RETIRADA</Label>
                 {/* <Text>{startDateAux || startDate}</Text> */}
-                <Text>{startDateAux || startDate}</Text>
+                <Text>{startDate}</Text>
               </Info>
               <Info>
                 <Label>DATA DE ENTREGA</Label>

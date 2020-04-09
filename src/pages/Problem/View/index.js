@@ -18,7 +18,6 @@ export default function ViewProblem({ navigation, route }) {
   const { id, product } = route.params;
   const [problems, setProblems] = useState([]);
 
-  // '/delivery/:id/problems
   async function loadProblems() {
     const response = await api.get(`/delivery/${id}/problems`);
     setProblems(response.data);

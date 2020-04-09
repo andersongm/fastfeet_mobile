@@ -25,34 +25,74 @@ export default function Deliveries({ navigation }) {
   const [deliveries, setDeliveries] = useState([]);
   const [current, setCurrent] = useState(true);
   const deliveryMan = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
   // const status = useSelector((state) => state.deliveries.delivery_status);
+  const [currentPage, setCurrenPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const endPage = Math.ceil(totalRecords / 5);
+
   const dispatch = useDispatch();
 
-  async function loadDeliveries(id, statusDelivery) {
-    const response = await api.get(`deliverymans/${id}/deliveries`);
+  // console.log('totalRecords:', totalRecords);
 
-    console.log(response.data);
+  async function loadDeliveries(id, statusDelivery = null, page = 1) {
+    // setLoading(true);
+    const response = await api.get(`deliverymans/${id}/deliveries`, {
+      params: {
+        status: statusDelivery,
+        page,
+      },
+    });
+    // console.log('loadDeliveries:', page);
+    const { count, rows } = response.data;
+    setCurrenPage(page);
+    setTotalRecords(count);
+
+    console.log('deliveries:', rows);
 
     let filtereds = null;
 
     if (statusDelivery) {
-      filtereds = response.data.filter(
-        (delivery) => delivery.status === statusDelivery
+      filtereds = rows.filter(
+        (delivery) => delivery.status === String(statusDelivery).toUpperCase()
       );
     } else {
-      filtereds = response.data.filter(
+      filtereds = rows.filter(
         (delivery) =>
           delivery.status === 'RETIRADA' || delivery.status === 'PENDENTE'
       );
     }
 
     setDeliveries(filtereds);
+    // setLoading(false);
   }
 
-  useEffect(() => {
-    loadDeliveries(deliveryMan.profile.id);
-    setCurrent(current);
-  }, []);
+  function loadMore() {
+    console.log('loadMore - page ==================> ', currentPage);
+    if (currentPage >= endPage) {
+      return;
+    }
+
+    setCurrenPage(currentPage);
+
+    // console.log('currentPage:', currentPage);
+    loadDeliveries(deliveryMan.profile.id, null, currentPage + 1);
+  }
+
+  function loadLess() {
+    console.log('loadLess - page ==================> ', currentPage);
+    if (currentPage <= 1) {
+      return;
+    }
+    setCurrenPage(currentPage);
+    console.log('currentPage:', currentPage);
+    loadDeliveries(deliveryMan.profile.id, null, currentPage - 1);
+  }
+
+  // useEffect(() => {
+  //   loadDeliveries(deliveryMan.profile.id);
+  //   setCurrent(current);
+  // }, []);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -71,7 +111,7 @@ export default function Deliveries({ navigation }) {
   }
 
   function handleGetDelivered() {
-    loadDeliveries(deliveryMan.profile.id, 'ENTREGUE');
+    loadDeliveries(deliveryMan.profile.id, 'entregue');
     setCurrent(!current);
   }
 
@@ -109,9 +149,13 @@ export default function Deliveries({ navigation }) {
         <DeliveryList
           data={deliveries}
           keyExtractor={(item) => String(item.id)}
+          onRefresh={() => loadLess()}
+          refreshing={loading}
           renderItem={({ item }) => (
             <Card data={item} navigation={navigation} />
           )}
+          onEndReachedThreshold={0.1}
+          onEndReached={loadMore}
         />
       </Container>
     </>
