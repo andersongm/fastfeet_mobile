@@ -16,29 +16,7 @@ const Stack = createStackNavigator();
 
 function DeliveriesTab({ navigation }) {
   return (
-    <Stack.Navigator
-      screenOptions={
-        {
-          // headerBackTitleVisible: false,
-          // headerTitleAlign: 'center',
-          // headerTitleStyle: {
-          //   fontWeight: 'bold',
-          // },
-          // headerTintColor: '#fff',
-          // headerTransparent: true,
-          // headerLeft: () => (
-          //   <TouchableOpacity
-          //     onPress={() => {
-          //       navigation.goBack();
-          //     }}
-          //   >
-          //     <Icon name="chevron-left" size={24} color="#fff" />
-          //   </TouchableOpacity>
-          // ),
-        }
-      }
-      initialRouteName="Deliveries"
-    >
+    <Stack.Navigator initialRouteName="Deliveries">
       <Stack.Screen
         name="Entregas"
         component={Deliveries}
@@ -48,7 +26,6 @@ function DeliveriesTab({ navigation }) {
           headerStyle: {
             borderBottomWidth: 0,
             shadowColor: 'transparent',
-            // backgroundColor: '#7d40e7',
           },
         }}
       />

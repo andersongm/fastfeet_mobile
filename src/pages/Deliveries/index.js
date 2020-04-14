@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, TouchableOpacity, StatusBar } from 'react-native';
+import { Alert, TouchableOpacity, StatusBar, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
 import Card from './Card';
+import Empty from '../../components/Empty';
 import { signOut } from '~/store/modules/auth/actions';
 
 import {
@@ -92,6 +93,7 @@ export default function Deliveries({ navigation }) {
   return (
     <>
       <StatusBar barStyle="dark-content" />
+
       <Container>
         <HeaderPage>
           <Avatar
@@ -130,6 +132,7 @@ export default function Deliveries({ navigation }) {
           )}
           onEndReachedThreshold={0.2}
           onEndReached={loadMore}
+          ListEmptyComponent={<Empty />}
         />
       </Container>
     </>
