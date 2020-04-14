@@ -34,8 +34,6 @@ export default function Deliveries({ navigation }) {
 
   const dispatch = useDispatch();
 
-  // console.log('totalRecords:', totalRecords);
-
   async function loadDeliveries(id, statusDelivery = null, page = 1) {
     setLoading(true);
     const response = await api.get(`deliverymans/${id}/deliveries`, {
@@ -44,26 +42,11 @@ export default function Deliveries({ navigation }) {
         page,
       },
     });
-    // console.log('loadDeliveries:', page);
     const { count, rows } = response.data;
     setCurrenPage(page);
     setTotalRecords(count);
 
-    // let filtereds = null;
-
-    // if (statusDelivery) {
-    //   filtereds = rows.filter(
-    //     (delivery) => delivery.status === String(statusDelivery).toUpperCase()
-    //   );
-    // } else {
-    //   filtereds = rows.filter(
-    //     (delivery) =>
-    //       delivery.status === 'RETIRADA' || delivery.status === 'PENDENTE'
-    //   );
-    // }
-
     setDeliveries(rows);
-    // setDeliveries(filtereds);
     setLoading(false);
   }
 
@@ -98,14 +81,12 @@ export default function Deliveries({ navigation }) {
     setCurrentStatus('pendente');
     loadDeliveries(deliveryMan.profile.id, 'pendente');
     setCurrent(!current);
-    Alert.alert(currentStatus);
   }
 
   function handleGetDelivered() {
     setCurrentStatus('entregue');
     loadDeliveries(deliveryMan.profile.id, 'entregue');
     setCurrent(!current);
-    Alert.alert(currentStatus);
   }
 
   return (

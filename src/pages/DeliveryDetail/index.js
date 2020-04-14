@@ -27,13 +27,6 @@ import {
 export default function DeliveryDetail({ navigation, route }) {
   let messageError = '';
 
-  // const dispatch = useDispatch();
-  // const status = useSelector((state) => state.deliveries.delivery_status);
-
-  const [statusAux, setStatusAux] = useState('');
-  const [startDateAux, setStartDateAux] = useState('');
-
-  // const delivery = route.params.item;
   const [delivery, setDelivery] = useState([]);
   const { id, deliveryman_id } = route.params.item;
 
@@ -51,12 +44,10 @@ export default function DeliveryDetail({ navigation, route }) {
     setDelivery(response.data.rows[0]);
   }
 
-  // const delivery = route.params.item;
-
-  const startDate = delivery.start_date
+  const startDate = delivery?.start_date
     ? format(parseISO(delivery.start_date), 'dd/MM/yyyy')
     : '--/--/--';
-  const endDate = delivery.end_date
+  const endDate = delivery?.end_date
     ? format(parseISO(delivery.end_date), 'dd/MM/yyyy')
     : '--/--/--';
 
@@ -91,11 +82,6 @@ export default function DeliveryDetail({ navigation, route }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //   console.log('chamando loadDelivery:...', id);
-  //   loadDelivery(id);
-  // }, []);
-
   function handleViewProblem() {
     navigation.navigate('ViewProblem', {
       id: delivery.id,
@@ -128,11 +114,6 @@ export default function DeliveryDetail({ navigation, route }) {
     navigation.navigate('ConfirmDelivery', { id: delivery.id });
   }
 
-  function setInfoAux() {
-    setStatusAux('RETIRADA');
-    setStartDateAux(format(new Date().getTime(), 'dd/MM/yyyy'));
-  }
-
   async function handleWithDraw(idDelivery) {
     console.log(idDelivery, delivery.deliveryman_id);
 
@@ -152,7 +133,7 @@ export default function DeliveryDetail({ navigation, route }) {
         [
           {
             text: 'OK',
-            onPress: () => loadDelivery(id), // setInfoAux(),
+            onPress: () => loadDelivery(id),
           },
         ],
         { cancelable: false }
@@ -190,13 +171,6 @@ export default function DeliveryDetail({ navigation, route }) {
           <Header>
             <Icon name="event" size={30} color="#7d40e7" />
             <LabelHeader>Situação da Entrega</LabelHeader>
-            {/* <ContainerWithDraw
-              status={
-                statusAux === 'RETIRADA'
-                  ? false
-                  : delivery.status === 'PENDENTE'
-              }
-            > */}
             <ContainerWithDraw status={delivery.status === 'PENDENTE'}>
               <WithDrawButton
                 icon="thumb-up"
@@ -211,18 +185,15 @@ export default function DeliveryDetail({ navigation, route }) {
           <InfoView>
             <Info>
               <Label>STATUS</Label>
-              {/* <Text>{statusAux || delivery.status}</Text> */}
               <Text>{delivery.status}</Text>
             </Info>
             <InfoDate>
               <Info>
                 <Label>DATA DE RETIRADA</Label>
-                {/* <Text>{startDateAux || startDate}</Text> */}
                 <Text>{startDate}</Text>
               </Info>
               <Info>
                 <Label>DATA DE ENTREGA</Label>
-                {/* <Text>{endDate}</Text> */}
                 <Text>{endDate}</Text>
               </Info>
             </InfoDate>

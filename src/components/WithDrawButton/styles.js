@@ -3,9 +3,7 @@ import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled(RectButton)`
   width: 70px;
-  height: 45px;
-  /* background: #f8f9fd; */
-  /* border: 1px solid #eee; */
+  height: 48px;
   justify-content: center;
   align-items: center;
 `;

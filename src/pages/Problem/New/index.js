@@ -56,7 +56,7 @@ export default function NewProblem({ navigation, route }) {
           onChangeText={(text) => setProblem(text)}
         />
         <ButtonContainer>
-          <SubmitButton onPress={handleSubmit}>
+          <SubmitButton active={!problem} onPress={problem && handleSubmit}>
             <Text>Enviar</Text>
           </SubmitButton>
         </ButtonContainer>

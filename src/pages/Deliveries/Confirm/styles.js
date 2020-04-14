@@ -3,17 +3,6 @@ import { RNCamera } from 'react-native-camera';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { RectButton } from 'react-native-gesture-handler';
 
-// export const ContainerConfirm = styled.SafeAreaView`
-//   flex: 1;
-//   justify-content: space-between;
-//   padding: 0 30px 0 30px;
-//   /* height: 400px;
-//   width: 90%;
-//   margin: 0 auto;
-//   align-content: center;
-//   background: #7d40e7; */
-// `;
-
 export const ContainerConfirm = styled.SafeAreaView`
   background: #7d40e7;
   height: 140px;
@@ -23,18 +12,14 @@ export const ContainerConfirm = styled.SafeAreaView`
 `;
 
 export const Container = styled.View`
-  /* flex: 1; */
   justify-content: space-between;
   width: 340px;
   justify-content: space-between;
-  /* height: 340px; */
 `;
 
 export const Camera = styled(RNCamera)`
-  /* flex: 1; */
   margin-top: 30px;
   height: 420px;
-  /* border-radius: 10px; */
 `;
 
 export const IconButtonTop = styled.TouchableOpacity`
@@ -71,6 +56,7 @@ export const SubmitButton = styled(RectButton)`
   align-content: center;
   justify-content: center;
   border-radius: 4px;
+  opacity: ${(props) => (props.active ? 0.4 : 1)};
 `;
 
 export const Text = styled.Text`

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import api from '../../../services/api';
 
 import {
@@ -7,9 +7,7 @@ import {
   Camera as RNCamera,
   IconButton,
   Icon,
-  Header,
   Footer,
-  IconButtonTop,
   ContainerConfirm,
   SubmitButton,
   Text,
@@ -72,6 +70,10 @@ export default function ConfirmDelivery({ navigation, route }) {
           ],
           { cancelable: false }
         );
+      } else {
+        Alert.alert(
+          'Você deve Capturar a Assinatura do Destinatário Primeiro!'
+        );
       }
     } catch (error) {
       Alert.alert(
@@ -129,18 +131,6 @@ export default function ConfirmDelivery({ navigation, route }) {
         {({ camera, status }) => {
           return (
             <Container>
-              <Header>
-                {/* <IconButtonTop onPress={() => setFlashMode((value) => !value)}>
-                <Icon
-                  name={flashMode ? 'flash-on' : 'flash-off'}
-                  size={30}
-                  color="#fff"
-                />
-              </IconButtonTop> */}
-                {/* <IconButtonTop onPress={() => closeCamera()}>
-                <Icon name="close" size={30} color="#fff" />
-              </IconButtonTop> */}
-              </Header>
               <Footer>
                 <IconButton
                   onPress={() => takePicture(camera)}
@@ -153,7 +143,10 @@ export default function ConfirmDelivery({ navigation, route }) {
           );
         }}
       </RNCamera>
-      <SubmitButton onPress={handleSubmit}>
+      <SubmitButton
+        active={!signaturePhoto}
+        onPress={signaturePhoto && handleSubmit}
+      >
         <Text>Enviar</Text>
       </SubmitButton>
     </ContainerConfirm>

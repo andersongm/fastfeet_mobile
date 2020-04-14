@@ -45,6 +45,7 @@ export const SubmitButton = styled(RectButton)`
   align-content: center;
   justify-content: center;
   border-radius: 4px;
+  opacity: ${(props) => (props.active ? 0.4 : 1)};
 `;
 
 export const Text = styled.Text`
