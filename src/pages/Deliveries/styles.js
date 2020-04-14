@@ -2,19 +2,8 @@ import styled from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 
-// export const Container = styled.KeyboardAvoidingView.attrs({
-//   enabled: Platform.OS === 'ios',
-//   behavior: 'padding',
-// })`
-//   flex: 1;
-//   /* justify-content: center;
-//   align-items: center;
-//   padding: 0 30px; */
-// `;
-
 export const Container = styled.SafeAreaView`
   flex: 1;
-  /* background: #fff; */
   background: #fff;
 `;
 
@@ -33,7 +22,6 @@ export const SubmitButton = styled(Button)`
 
 export const DeliveryManInfo = styled.View`
   flex: 1;
-  /* background: #f90; */
   padding: 20px;
 `;
 
@@ -52,9 +40,7 @@ export const Avatar = styled.Image`
 export const DeliveryList = styled.FlatList.attrs({
   showsVerticalScroolIndicator: false,
   contentContainerStyle: { padding: 30 },
-  // contentInsetAdjustmentBehavior: 'automatic',
 })`
-  /* align-self: auto; */
   margin-bottom: 30px;
 `;
 
@@ -83,7 +69,6 @@ export const ButtonStatus = styled(RectButton)`
 `;
 
 export const TextButtonStatus = styled.Text`
-  /* color: #7d40e7; */
   color: ${(props) => (props.status ? '#e95151' : '#7d40e7')};
   font-weight: bold;
   font-size: 12px;

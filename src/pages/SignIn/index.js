@@ -23,7 +23,6 @@ export default function SignIn({ navigation }) {
 
   function handleSubmit() {
     dispatch(signInRequest(id));
-    // navigation.navigate('Dashboard');
   }
 
   return (
@@ -40,15 +39,6 @@ export default function SignIn({ navigation }) {
             autoCapitalize="none"
             placeholder="Informe seu ID de cadastro"
           />
-          {/* <FormInput
-            // icon="mail-outline"
-            name="id"
-            // keyboardType="numeric"
-            autoCorrect={false}
-            autoCapitalize="none"
-            placeholder="Informe seu ID de cadastro"
-            returnKeyType="send"
-          /> */}
           <SubmitButton
             loading={loading}
             onPress={handleSubmit}

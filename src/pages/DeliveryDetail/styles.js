@@ -15,7 +15,6 @@ export const DeliveryInfo = styled.View`
   box-shadow: 1px 1px 2px #ddd;
   border-radius: 4px;
   padding: 20px;
-  /* margin-bottom: 5px; */
 `;
 
 export const DeliveryStatus = styled.View`

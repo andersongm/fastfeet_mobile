@@ -8,18 +8,8 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   background: #7d40e7;
   padding: 0 20px;
   height: 140px;
-  /* justify-content: center; */
   align-items: center;
-  /* padding: 0 30px; */
 `;
-
-// export const Container = styled.SafeAreaView`
-//   background: #7d40e7;
-//   height: 140px;
-//   padding: 0 20px;
-//   align-items: center;
-//   justify-content: center;
-// `;
 
 export const Form = styled.View`
   margin-top: 50px;
@@ -55,6 +45,4 @@ export const Text = styled.Text`
   text-align: center;
 `;
 
-export const ButtonContainer = styled.View`
-  /* background: #f90; */
-`;
+export const ButtonContainer = styled.View``;
