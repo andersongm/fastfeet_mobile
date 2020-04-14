@@ -82,9 +82,19 @@ export default function ConfirmDelivery({ navigation, route }) {
 
   async function takePicture(camera) {
     if (camera) {
-      const options = { quality: 0.5, base64: true, pauseAfterCapture: true };
+      const options = {
+        quality: 0.2,
+        base64: true,
+        width: 408,
+        heigth: 200,
+        forceUpOrientation: true,
+        orientation: RNCamera.Constants.Orientation.portrait,
+        pictureOrientation: 0,
+        pauseAfterCapture: true,
+      };
       const data = await camera.takePictureAsync(options);
-      // alert(data.uri);
+
+      console.log('data:', data);
 
       Alert.alert(
         'Confirmar Assinatura',
@@ -110,6 +120,7 @@ export default function ConfirmDelivery({ navigation, route }) {
         autoFocus={RNCamera.Constants.AutoFocus.on}
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.off}
+        pictureOrientation={RNCamera.Constants.Orientation.portrait}
         androidCameraPermissionOptions={androidCameraPermissionOptions}
         androidRecordAudioPermissionOptions={
           androidRecordAudioPermissionOptions

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { Alert, TouchableOpacity, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
@@ -24,6 +24,7 @@ import {
 export default function Deliveries({ navigation }) {
   const [deliveries, setDeliveries] = useState([]);
   const [current, setCurrent] = useState(true);
+  const [currentStatus, setCurrentStatus] = useState('pendente');
   const deliveryMan = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   // const status = useSelector((state) => state.deliveries.delivery_status);
@@ -36,7 +37,7 @@ export default function Deliveries({ navigation }) {
   // console.log('totalRecords:', totalRecords);
 
   async function loadDeliveries(id, statusDelivery = null, page = 1) {
-    // setLoading(true);
+    setLoading(true);
     const response = await api.get(`deliverymans/${id}/deliveries`, {
       params: {
         status: statusDelivery,
@@ -48,55 +49,43 @@ export default function Deliveries({ navigation }) {
     setCurrenPage(page);
     setTotalRecords(count);
 
-    console.log('deliveries:', rows);
+    // let filtereds = null;
 
-    let filtereds = null;
+    // if (statusDelivery) {
+    //   filtereds = rows.filter(
+    //     (delivery) => delivery.status === String(statusDelivery).toUpperCase()
+    //   );
+    // } else {
+    //   filtereds = rows.filter(
+    //     (delivery) =>
+    //       delivery.status === 'RETIRADA' || delivery.status === 'PENDENTE'
+    //   );
+    // }
 
-    if (statusDelivery) {
-      filtereds = rows.filter(
-        (delivery) => delivery.status === String(statusDelivery).toUpperCase()
-      );
-    } else {
-      filtereds = rows.filter(
-        (delivery) =>
-          delivery.status === 'RETIRADA' || delivery.status === 'PENDENTE'
-      );
-    }
-
-    setDeliveries(filtereds);
-    // setLoading(false);
+    setDeliveries(rows);
+    // setDeliveries(filtereds);
+    setLoading(false);
   }
 
   function loadMore() {
-    console.log('loadMore - page ==================> ', currentPage);
     if (currentPage >= endPage) {
       return;
     }
-
     setCurrenPage(currentPage);
-
-    // console.log('currentPage:', currentPage);
-    loadDeliveries(deliveryMan.profile.id, null, currentPage + 1);
+    loadDeliveries(deliveryMan.profile.id, currentStatus, currentPage + 1);
   }
 
   function loadLess() {
-    console.log('loadLess - page ==================> ', currentPage);
     if (currentPage <= 1) {
       return;
     }
     setCurrenPage(currentPage);
-    console.log('currentPage:', currentPage);
-    loadDeliveries(deliveryMan.profile.id, null, currentPage - 1);
+    loadDeliveries(deliveryMan.profile.id, currentStatus, currentPage - 1);
   }
-
-  // useEffect(() => {
-  //   loadDeliveries(deliveryMan.profile.id);
-  //   setCurrent(current);
-  // }, []);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
-      loadDeliveries(deliveryMan.profile.id);
+      loadDeliveries(deliveryMan.profile.id, 'pendente', 1);
       setCurrent(current);
     });
   }, []);
@@ -106,13 +95,17 @@ export default function Deliveries({ navigation }) {
   }
 
   function handleGetPendings() {
-    loadDeliveries(deliveryMan.profile.id);
+    setCurrentStatus('pendente');
+    loadDeliveries(deliveryMan.profile.id, 'pendente');
     setCurrent(!current);
+    Alert.alert(currentStatus);
   }
 
   function handleGetDelivered() {
+    setCurrentStatus('entregue');
     loadDeliveries(deliveryMan.profile.id, 'entregue');
     setCurrent(!current);
+    Alert.alert(currentStatus);
   }
 
   return (
@@ -154,7 +147,7 @@ export default function Deliveries({ navigation }) {
           renderItem={({ item }) => (
             <Card data={item} navigation={navigation} />
           )}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.2}
           onEndReached={loadMore}
         />
       </Container>
