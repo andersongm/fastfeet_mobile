@@ -28,7 +28,6 @@ export default function Deliveries({ navigation }) {
   const [currentStatus, setCurrentStatus] = useState('pendente');
   const deliveryMan = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-  // const status = useSelector((state) => state.deliveries.delivery_status);
   const [currentPage, setCurrenPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const endPage = Math.ceil(totalRecords / 5);
@@ -140,5 +139,7 @@ export default function Deliveries({ navigation }) {
 }
 
 Deliveries.propTypes = {
-  navigation: PropTypes.func,
+  navigation: PropTypes.shape({
+    addListener: PropTypes.func,
+  }).isRequired,
 };

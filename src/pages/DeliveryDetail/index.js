@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, Alert } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { parseISO, format } from 'date-fns';
 import OperationButton from '../../components/OperationButton';
@@ -30,7 +30,6 @@ export default function DeliveryDetail({ navigation, route }) {
   const { id, deliveryman_id } = route.params.item;
 
   async function loadDelivery(idDelivery) {
-    console.log('deliveryman_id:', deliveryman_id, idDelivery);
     const response = await api.get(
       `/deliverymans/${deliveryman_id}/deliveries/`,
       {
@@ -39,7 +38,6 @@ export default function DeliveryDetail({ navigation, route }) {
         },
       }
     );
-    console.log('DeliveryDetail:', response.data.rows);
     setDelivery(response.data.rows[0]);
   }
 
@@ -114,8 +112,6 @@ export default function DeliveryDetail({ navigation, route }) {
   }
 
   async function handleWithDraw(idDelivery) {
-    console.log(idDelivery, delivery.deliveryman_id);
-
     try {
       const response = await api.put(`/deliveries/${idDelivery}/start`, {
         deliveryman_id: delivery.deliveryman_id,
@@ -204,24 +200,21 @@ export default function DeliveryDetail({ navigation, route }) {
             colorIcon="#f00"
             navigation={navigation}
             onPress={handleNewProblem}
-          >
-            Informar Problema
-          </OperationButton>
+            label="Informar Problema"
+          />
           <OperationButton
             icon="info-outline"
             colorIcon="#e7ba40"
             navigation={navigation}
             onPress={handleViewProblem}
-          >
-            Visualizar Problemas
-          </OperationButton>
+            label="Visualizar Problemas"
+          />
           <OperationButton
             icon="check-circle"
             colorIcon="#7d40e7"
             onPress={handleConfirmDelivery}
-          >
-            Confirmar Entrega
-          </OperationButton>
+            label="Confirmar Entrega"
+          />
         </DeliveryButtons>
       </Container>
     </>
@@ -229,7 +222,9 @@ export default function DeliveryDetail({ navigation, route }) {
 }
 
 DeliveryDetail.propTypes = {
-  navigation: PropTypes.func,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.number,

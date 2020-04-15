@@ -4,17 +4,19 @@ import { parseISO, format } from 'date-fns';
 
 import { Container, DescProblem, DateProblem } from './styles';
 
-export default function ProblemCard({ data }) {
-  const dateFormatted = format(parseISO(data.createdAt), 'dd/MM/yyyy');
+export default function ProblemCard({ dataProblem }) {
+  const dateFormatted = dataProblem
+    ? format(parseISO(dataProblem?.createdAt), 'dd/MM/yyyy')
+    : '--/--/--';
 
   return (
     <Container>
-      <DescProblem>{data.description}</DescProblem>
+      <DescProblem>{dataProblem?.description}</DescProblem>
       <DateProblem>{dateFormatted}</DateProblem>
     </Container>
   );
 }
 
-Card.propTypes = {
-  data: PropTypes.object,
+ProblemCard.propTypes = {
+  dataProblem: PropTypes.object,
 };

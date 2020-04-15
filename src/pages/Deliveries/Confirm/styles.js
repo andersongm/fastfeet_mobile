@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import { RNCamera } from 'react-native-camera';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { RectButton } from 'react-native-gesture-handler';
+import Button from '../../../components/Button';
 
 export const ContainerConfirm = styled.SafeAreaView`
   background: #7d40e7;
@@ -48,7 +49,7 @@ export const Footer = styled.View`
   align-items: center;
 `;
 
-export const SubmitButton = styled(RectButton)`
+export const SubmitButton = styled.TouchableOpacity`
   margin-top: 20px;
   background: #7d40e7;
   height: 46px;
@@ -56,7 +57,7 @@ export const SubmitButton = styled(RectButton)`
   align-content: center;
   justify-content: center;
   border-radius: 4px;
-  opacity: ${(props) => (props.active ? 0.4 : 1)};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 `;
 
 export const Text = styled.Text`

@@ -52,6 +52,8 @@ export default function Card({ data, navigation }) {
 }
 
 Card.propTypes = {
-  navigation: PropTypes.func,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
   data: PropTypes.object,
 };

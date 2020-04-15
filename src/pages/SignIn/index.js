@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Image } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { Image, Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Background from '../../components/Background';
 import { signInRequest } from '~/store/modules/auth/actions';
 
@@ -14,6 +14,20 @@ export default function SignIn() {
   const [id, setId] = useState('');
 
   function handleSubmit() {
+    if (!id) {
+      Alert.alert(
+        'FastFeet',
+        'Informe seu ID de Cadastro!',
+        [
+          {
+            text: 'OK',
+          },
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+
     dispatch(signInRequest(id));
   }
 

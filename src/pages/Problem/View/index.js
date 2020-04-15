@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../services/api';
 import ProblemCard from '../ProblemCard';
+import Empty from '../../../components/Empty';
 
 import { Container, Problem, TitleDelivery, ProblemList } from './styles';
 
@@ -11,6 +12,7 @@ export default function ViewProblem({ navigation, route }) {
 
   async function loadProblems() {
     const response = await api.get(`/delivery/${id}/problems`);
+
     setProblems(response.data);
   }
 
@@ -26,8 +28,9 @@ export default function ViewProblem({ navigation, route }) {
           data={problems}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <ProblemCard data={item} navigation={navigation} />
+            <ProblemCard dataProblem={item} navigation={navigation} />
           )}
+          ListEmptyComponent={<Empty />}
         />
       </Problem>
     </Container>
@@ -35,7 +38,6 @@ export default function ViewProblem({ navigation, route }) {
 }
 
 ViewProblem.propTypes = {
-  navigation: PropTypes.func,
   route: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.number,

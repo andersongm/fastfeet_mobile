@@ -47,8 +47,6 @@ export default function ConfirmDelivery({ navigation, route }) {
 
         const { id } = response.data;
 
-        console.log(response.data);
-
         const endResponse = await api.put(`deliveries/${idDelivery}/end`, {
           signature_id: id,
         });
@@ -97,8 +95,6 @@ export default function ConfirmDelivery({ navigation, route }) {
       };
       const data = await camera.takePictureAsync(options);
 
-      console.log('data:', data);
-
       Alert.alert(
         'Confirmar Assinatura',
         'Deseja enviar essa Assinatura?',
@@ -144,10 +140,7 @@ export default function ConfirmDelivery({ navigation, route }) {
           );
         }}
       </RNCamera>
-      <SubmitButton
-        active={!signaturePhoto}
-        onPress={signaturePhoto && handleSubmit}
-      >
+      <SubmitButton disabled={!signaturePhoto} onPress={handleSubmit}>
         <Text>Enviar</Text>
       </SubmitButton>
     </ContainerConfirm>
@@ -155,7 +148,9 @@ export default function ConfirmDelivery({ navigation, route }) {
 }
 
 ConfirmDelivery.propTypes = {
-  navigation: PropTypes.func,
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+  }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.number,

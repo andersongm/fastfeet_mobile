@@ -57,7 +57,8 @@ export default function NewProblem({ navigation, route }) {
           onChangeText={(text) => setProblem(text)}
         />
         <ButtonContainer>
-          <SubmitButton active={!problem} onPress={problem && handleSubmit}>
+          {/* <SubmitButton active={!problem} onPress={problem && handleSubmit}> */}
+          <SubmitButton disabled={!problem} onPress={handleSubmit}>
             <Text>Enviar</Text>
           </SubmitButton>
         </ButtonContainer>
@@ -66,8 +67,11 @@ export default function NewProblem({ navigation, route }) {
   );
 }
 
-ConfirmDelivery.propTypes = {
-  navigation: PropTypes.func,
+NewProblem.propTypes = {
+  // .navigation: PropTypes.func,
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.number,

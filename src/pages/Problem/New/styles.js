@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
+import Button from '../../../components/Button';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
@@ -28,14 +29,14 @@ export const FormInput = styled.TextInput.attrs({
   border-radius: 4px;
   height: 200px;
 `;
-export const SubmitButton = styled(RectButton)`
+export const SubmitButton = styled.TouchableOpacity`
   margin-top: 20px;
   background: #7d40e7;
   height: 46px;
   align-content: center;
   justify-content: center;
   border-radius: 4px;
-  opacity: ${(props) => (props.active ? 0.4 : 1)};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 `;
 
 export const Text = styled.Text`
