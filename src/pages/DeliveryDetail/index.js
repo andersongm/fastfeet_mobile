@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { parseISO, format } from 'date-fns';
 import OperationButton from '../../components/OperationButton';
 import WithDrawButton from '../../components/WithDrawButton';
-import { withDraw } from '../../store/modules/deliveries/actions';
 import api from '../../services/api';
 
 import {
@@ -52,7 +51,7 @@ export default function DeliveryDetail({ navigation, route }) {
     : '--/--/--';
 
   function handleNewProblem() {
-    if (delivery.status === 'PENDENTE' && statusAux !== 'RETIRADA') {
+    if (delivery.status === 'PENDENTE' && delivery.status !== 'RETIRADA') {
       messageError =
         'Encomenda deve ser retirada primeiro para registrar um problema!';
     } else if (delivery.status === 'ENTREGUE') {
@@ -228,3 +227,12 @@ export default function DeliveryDetail({ navigation, route }) {
     </>
   );
 }
+
+DeliveryDetail.propTypes = {
+  navigation: PropTypes.func,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }).isRequired,
+};

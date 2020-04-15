@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-
+import PropTypes from 'prop-types';
 import { Container, Point, Line, Labels, Label, Points } from './styles';
 
 export default function Timeline({ status }) {
@@ -27,3 +26,7 @@ export default function Timeline({ status }) {
     </Container>
   );
 }
+
+Timeline.propTypes = {
+  status: PropTypes.string,
+};

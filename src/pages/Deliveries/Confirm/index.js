@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert } from 'react-native';
+import PropTypes from 'prop-types';
 import api from '../../../services/api';
 
 import {
@@ -15,14 +16,14 @@ import {
 
 const androidCameraPermissionOptions = {
   title: 'Permissão para usar a câmera',
-  message: 'Gostaria da sua permissão para usar sua câmera',
+  message: 'FastFeet precisa de permissão para usar a câmera',
   buttonPositive: 'Ok',
   buttonNegative: 'Cancelar',
 };
 
 const androidRecordAudioPermissionOptions = {
   title: 'Permissão para usar o microfone',
-  message: 'Gostaria da sua permissão para usar seu microfone',
+  message: 'FastFeet precisa de permissão para usar seu microfone',
   buttonPositive: 'Ok',
   buttonNegative: 'Cancelar',
 };
@@ -152,3 +153,12 @@ export default function ConfirmDelivery({ navigation, route }) {
     </ContainerConfirm>
   );
 }
+
+ConfirmDelivery.propTypes = {
+  navigation: PropTypes.func,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }).isRequired,
+};

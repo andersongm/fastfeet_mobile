@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View, Alert } from 'react-native';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { CommonActions } from '@react-navigation/native';
 import { parseISO, format } from 'date-fns';
 import Timeline from '~/components/Timeline';
 
@@ -51,3 +50,8 @@ export default function Card({ data, navigation }) {
     </Container>
   );
 }
+
+Card.propTypes = {
+  navigation: PropTypes.func,
+  data: PropTypes.object,
+};

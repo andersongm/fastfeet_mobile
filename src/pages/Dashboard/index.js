@@ -14,7 +14,7 @@ import ConfirmDelivery from '../Deliveries/Confirm';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function DeliveriesTab({ navigation }) {
+function DeliveriesTab() {
   return (
     <Stack.Navigator initialRouteName="Deliveries">
       <Stack.Screen

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { parseISO, format } from 'date-fns';
 
 import { Container, DescProblem, DateProblem } from './styles';
@@ -13,3 +14,7 @@ export default function ProblemCard({ data }) {
     </Container>
   );
 }
+
+Card.propTypes = {
+  data: PropTypes.object,
+};

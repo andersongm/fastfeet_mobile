@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
+import PropTypes from 'prop-types';
 import api from '../../../services/api';
 
 import {
@@ -64,3 +65,12 @@ export default function NewProblem({ navigation, route }) {
     </Container>
   );
 }
+
+ConfirmDelivery.propTypes = {
+  navigation: PropTypes.func,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }).isRequired,
+};

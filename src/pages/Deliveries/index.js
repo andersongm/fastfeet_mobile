@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, TouchableOpacity, StatusBar, Text } from 'react-native';
+import { TouchableOpacity, StatusBar } from 'react-native';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
@@ -9,7 +10,6 @@ import { signOut } from '~/store/modules/auth/actions';
 
 import {
   Container,
-  SubmitButton,
   HeaderPage,
   Avatar,
   DeliveryManInfo,
@@ -138,3 +138,7 @@ export default function Deliveries({ navigation }) {
     </>
   );
 }
+
+Deliveries.propTypes = {
+  navigation: PropTypes.func,
+};

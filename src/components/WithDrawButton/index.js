@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Label } from './styles';
@@ -11,3 +12,10 @@ export default function WithDrawButton({ children, icon, colorIcon, ...rest }) {
     </Container>
   );
 }
+
+WithDrawButton.propTypes = {
+  children: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  colorIcon: PropTypes.string,
+  onPress: PropTypes.func,
+};

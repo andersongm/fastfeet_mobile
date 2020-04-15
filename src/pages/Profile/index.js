@@ -13,7 +13,7 @@ import {
   Info,
 } from './styles';
 
-export default function Profile({ navigation }) {
+export default function Profile() {
   const deliveryMan = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let dateFormatted = '';
